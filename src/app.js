@@ -8,11 +8,11 @@ const app = express()
 app.get('/', (req, res) => {
     res.send('Hello World')
 })
+app.use(express.json())
 
-
-app.use(mascotasRoutes)
-app.use(appRoutes)
-app.use(userRoutes)
+app.use('/hundopt/api',mascotasRoutes)
+app.use('hundopt/api',appRoutes)
+app.use('hundopt/api',userRoutes)
 
 
 app.listen(3000)

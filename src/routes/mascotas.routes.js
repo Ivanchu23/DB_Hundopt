@@ -1,15 +1,15 @@
 import { Router } from 'express'
-import { createMascota, getMascotas } from '../Controllers/mascotas.controller.js'
+import { createMascota, getMascotas, getMascota } from '../Controllers/mascotas.controller.js'
 
 const router = Router();
 
 
 
-router.get('/createMascota', createMascota)
+router.post('/createMascota', createMascota)
 
 router.get('/showMascotas', getMascotas)
 
-
+router.get('/getMascota/:id', getMascota)
 
 
 export default router;
