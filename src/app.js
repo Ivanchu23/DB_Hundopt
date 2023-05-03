@@ -5,6 +5,9 @@ import mascotasRoutes from './routes/mascotas.routes.js'
 
 const app = express()
 
+
+
+
 app.get('/', (req, res) => {
     res.send('Hello World')
 })
