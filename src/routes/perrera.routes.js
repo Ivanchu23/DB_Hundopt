@@ -19,7 +19,7 @@ router.get('/perrera/redesSociales/:id', getRedesSociales)
 
 router.post('/perrera/redesSociales/:id', addRedesSociales)
 
-router.route('/perrera/redesSociales/:id', updateRedesSociales)
+router.put('/perrera/redesSociales/:id', updateRedesSociales)
 
 router.delete('/perrera/redesSociales/:id', deleteRedesSociales)
 
