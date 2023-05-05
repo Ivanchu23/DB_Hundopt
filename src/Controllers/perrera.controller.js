@@ -48,7 +48,7 @@ export const deletePerrera = async (req, res) => { //elimina una perrera
 
 export const getUsuariosLiked = async (req, res) => { //devuelve los usuarios que han dado like a una perrera
     try {
-        const [rows] = await pool.query('SELECT * FROM Usuario WHERE id IN (SELECT id_usuario FROM Usuarios_Perrera WHERE id_perrera = ?)', [req.params.id])
+        const [rows] = await pool.query('SELECT * FROM Usuarios WHERE id IN (SELECT id_usuario FROM Usuarios_Perrera WHERE id_perrera = ?)', [req.params.id])
         res.json(rows)
     } catch (error) {
         res.status(500).json({ message: 'Error al obtener los usuarios que han dado like a la perrera' })
@@ -93,7 +93,7 @@ export const deleteRedesSociales = async (req, res) => { //elimina las redes soc
 
 export const getDogs = async (req, res) => { //devuelve los perros de una perrera
     try {
-        const [rows] = await pool.query('SELECT * FROM Mascotas JOIN Mascotas_Perrera ON Mascotas.id = Mascotas_Perrera.id_mascota WHERE Mascotas_Perrera.id_perrera = ?', [req.params.id])
+        const [rows] = await pool.query('SELECT * FROM Mascotas JOIN Perrera_Mascotas ON Mascotas.id = Perrera_Mascotas.id_mascota WHERE Perrera_Mascotas.id_perrera = ?', [req.params.id])
         res.json(rows)
     } catch (error) {
         res.status(500).json({ message: 'Error al obtener los perros de la perrera' })
@@ -102,7 +102,7 @@ export const getDogs = async (req, res) => { //devuelve los perros de una perrer
 
 export const addDog = async (req, res) => { //añade un perro a una perrera
     try {
-        await pool.query('INSERT INTO Mascotas_Perrera (id_perrera, id_mascota) VALUES (?,?)', [req.params.id, req.body.id_mascota])
+        await pool.query('INSERT INTO Perrera_Mascotas (id_perrera, id_mascota) VALUES (?,?)', [req.params.id, req.body.id_mascota])
         res.json({ mensaje: 'Perro añadido correctamente' })
     } catch (error) {
         res.status(500).json({ message: 'Error al añadir el perro a la perrera' })
@@ -111,7 +111,7 @@ export const addDog = async (req, res) => { //añade un perro a una perrera
 
 export const deleteDog = async (req, res) => { //elimina un perro de una perrera
     try {
-        await pool.query('DELETE FROM Mascotas_Perrera WHERE id_perrera = ? AND id_mascota = ?', [req.params.id, req.body.id_mascota])
+        await pool.query('DELETE FROM Perrera_Mascotas WHERE id_perrera = ? AND id_mascota = ?', [req.params.id, req.body.id_mascota])
         res.json({ mensaje: 'Perro eliminado correctamente' })
     } catch (error) {
         res.status(500).json({ message: 'Error al eliminar el perro de la perrera' })

@@ -156,7 +156,7 @@ export const logout = async (req, res) => { //cierra sesión
 
 export const likedShelters = async (req, res) => { //devuelve todos los refugios que le gustan a un usuario
   try {
-    const result = await pool.query('SELECT * FROM Perreras JOIN Usuarios_Perreras ON Perreras.id = Usuarios_Perreras.id_perrera WHERE Usuarios_Perreras.id_usuario = ?', [req.params.id]);
+    const result = await pool.query('SELECT * FROM Perrera JOIN Usuarios_Perreras ON Perrera.id = Usuarios_Perreras.id_perrera WHERE Usuarios_Perreras.id_usuario = ?', [req.params.id]);
     res.status(200).json(result);
   }
   catch (error) {

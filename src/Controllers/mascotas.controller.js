@@ -41,7 +41,7 @@ export const deleteMascota = async (req, res) => {// Eliminar una mascota
 
 export const getMascotaStats = async (req, res) => { // Obtener las estadísticas de una mascota
     try {
-        const [rows] = await pool.query('SELECT * FROM Estadisticas_Mascotas WHERE id_mascota = ?', [req.params.id])
+        const [rows] = await pool.query('SELECT * FROM Mascotas_Caracteristicas WHERE id_mascota = ?', [req.params.id])
         res.json(rows)
     } catch (error) {
         res.status(500).json({ message: 'Error al obtener las estadísticas de la mascota'});
@@ -52,7 +52,7 @@ export const updateMascotaStats = async (req, res) => { // Actualizar las estad�
     
     try {
         // Obtener las características actuales de la mascota
-        const oldStats = await pool.query('SELECT * FROM mascotas_caracteristicas WHERE mascota_id = ?', [req.params.id]);
+        const oldStats = await pool.query('SELECT * FROM Mascotas_Caracteristicas WHERE mascota_id = ?', [req.params.id]);
         const actuales = oldStats.map(res => res.id_caracteristica);
     
         // Filtrar las nuevas características que no estén ya en la base de datos
@@ -72,7 +72,7 @@ export const updateMascotaStats = async (req, res) => { // Actualizar las estad�
 
 export const deleteStat = async (req, res) => { // Eliminar una estadística de una mascota
     try {
-        await pool.query('DELETE FROM Estadisticas_Mascotas WHERE id_mascota = ? AND id_estadistica = ?', [req.params.id, req.body.id_estadistica])
+        await pool.query('DELETE FROM Mascotas_Caracteristicas WHERE id_mascota = ? AND id_caracteristica = ?', [req.params.id, req.body.id_caracteristica])
         res.json({ mensaje: 'Estadística eliminada correctamente' })
     } catch (error) {
         res.status(500).json({ message: 'Error al eliminar la estadística de la mascota'});
@@ -90,7 +90,7 @@ export const updateMascota = async (req, res) => { // Actualizar una mascota
 
 export const getMascotaEnfermedades = async (req, res) => { // Obtener las enfermedades de una mascota
     try{
-        const [rows] = await pool.query('SELECT enfermedades.nombre FROM Mascotas INNER JOIN Mascotas_Enfermedades ON id_mascota = Mascotas_Enfermedades.id_mascota INNER JOIN Enfermedades ON Mascotas_Enfermedades.id_enfermedad = Enfermedades.id WHERE Mascotas.id = ?', [req.params.id])
+        const [rows] = await pool.query('SELECT Enfermedades.nombre FROM Mascotas INNER JOIN Mascotas_Enfermedades ON id_mascota = Mascotas_Enfermedades.id_mascota INNER JOIN Enfermedades ON Mascotas_Enfermedades.id_enfermedad = Enfermedades.id WHERE Mascotas.id = ?', [req.params.id])
         res.json(rows)
     } catch (error) {
         res.status(500).json({ message: 'Error al obtener las enfermedades de la mascota'});
