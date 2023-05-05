@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken'
 //devuelve todos los users
 export const getUsers = async (req, res) => { //devuelve todos los usuarios
   try {
-    const [rows] = await pool.query('SELECT * FROM Users')
+    const [rows] = await pool.query('SELECT * FROM Usuarios')
     res.json(rows)
   } catch (error) {
     console.error(error);
@@ -16,7 +16,7 @@ export const getUsers = async (req, res) => { //devuelve todos los usuarios
 
 export const getUser = async (req, res) => { //devuelve un usuario
   try {
-    const [rows] = await pool.query('SELECT * FROM Users WHERE id = ?', [req.params.id])
+    const [rows] = await pool.query('SELECT * FROM Usuarios WHERE id = ?', [req.params.id])
     res.json(rows)
   } catch (error) {
     console.error(error);
@@ -30,7 +30,7 @@ export const createUser = async (req, res) => { //crea un usuario
     if (nombre == null || email == null || pw == null || telefono == null) {
         return res.status(400).json({ msg: 'Faltan campos necesarios '})
     }
-    const query = 'SELECT * FROM usuarios WHERE email = ?';
+    const query = 'SELECT * FROM Usuarios WHERE email = ?';
   pool.query (query, [email], (error, results) => { //comprueba si el email ya está registrado
     if (error) {
       console.error(error);
@@ -43,7 +43,7 @@ export const createUser = async (req, res) => { //crea un usuario
     //await pool.query('INSERT INTO Users (nombre, email, pw, telefono) VALUES (?,?,?,?)', [req.body.nombre, req.body.email, req.body.pw, req.body.telefono])   
 
     const nuevoUsuario = { nombre, email, pw, telefono };
-    const insertQuery = 'INSERT INTO usuarios SET ?';
+    const insertQuery = 'INSERT INTO Usuarios SET ?';
     pool.query(insertQuery, nuevoUsuario, (error, results) => {
       if (error) {
         console.error(error);
@@ -58,7 +58,7 @@ export const createUser = async (req, res) => { //crea un usuario
 
 export const updateFullUser = async (req, res) => { //actualiza un usuario de forma completa
   try {
-    await pool.query('UPDATE Users SET nombre = ?, email = ?, pw = ?, telefono = ? WHERE id = ?', [req.body.nombre, req.body.email, req.body.pw, req.body.telefono, req.params.id])
+    await pool.query('UPDATE Usuarios SET nombre = ?, email = ?, pw = ?, telefono = ? WHERE id = ?', [req.body.nombre, req.body.email, req.body.pw, req.body.telefono, req.params.id])
     res.json({ msg: 'Usuario actualizado' })
   } catch (error) {
     console.error(error);
@@ -68,7 +68,7 @@ export const updateFullUser = async (req, res) => { //actualiza un usuario de fo
 
 export const updateUser = async (req, res) => { //actualiza un usuario
   try {
-    await pool.query('UPDATE Users SET ? WHERE id = ?', [req.body, req.params.id])
+    await pool.query('UPDATE Usuarios SET ? WHERE id = ?', [req.body, req.params.id])
     res.json({ msg: 'Usuario actualizado' })
   } catch (error) {
     console.error(error);
@@ -78,7 +78,7 @@ export const updateUser = async (req, res) => { //actualiza un usuario
 
 export const deleteUser = async (req, res) => { //borra un usuario
   try {
-    await pool.query('DELETE FROM Users WHERE id = ?', [req.params.id])
+    await pool.query('DELETE FROM Usuarios WHERE id = ?', [req.params.id])
     res.json({ msg: 'Usuario borrado' })
   } catch (error) {
     console.error(error);
@@ -87,7 +87,7 @@ export const deleteUser = async (req, res) => { //borra un usuario
 }
 
 export const login = async (req, res) => { //devuelve el token de un usuario
-    const [rows] = await pool.query('SELECT * FROM Users WHERE email = ? AND pw = ?', [req.body.email, req.body.pw])
+    const [rows] = await pool.query('SELECT * FROM Usuarios WHERE email = ? AND pw = ?', [req.body.email, req.body.pw])
     if (rows.length > 0) {
     const token = jwt.sign({ userId: usuario.id }, 'secreto', { expiresIn: '3h' });
     res.json({ auth: true, token: token });
