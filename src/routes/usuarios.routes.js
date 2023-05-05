@@ -3,7 +3,7 @@ import {getUsers, getUser, createUser, updateFullUser, deleteUser, updateUser, l
 
 const router = Router();
 
-router.get('/users ', getUsers)
+router.get('/users', getUsers)
 
 router.get('/users/:id', getUser)
 
