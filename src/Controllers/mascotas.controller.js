@@ -48,6 +48,10 @@ export const updateMascotaStats = async (req, res) => { // Actualizar las estad�
     }
 };
 
+export const deleteStat = async (req, res) => { // Eliminar una estadística de una mascota
+    await pool.query('DELETE FROM Estadisticas_Mascotas WHERE id_mascota = ? AND id_estadistica = ?', [req.params.id, req.body.id_estadistica])
+    res.json({ mensaje: 'Estadística eliminada correctamente' })
+}
 
 export const updateMascota = async (req, res) => { // Actualizar una mascota
     await pool.query('UPDATE Mascotas SET nombre = ?, raza = ?, ubicacion = ?, peso = ?, reservado = ? WHERE id = ?', [req.body.nombre, req.body.raza, req.body.ubicacion, req.body.peso, req.body.reservado, req.params.id])
@@ -64,7 +68,56 @@ export const addEnfermedad = async (req, res) => { // Añadir una enfermedad a u
     res.json({ mensaje: 'Enfermedad añadida correctamente' })
 }
 
-    
+export const deleteEnfermedad = async (req, res) => { // Eliminar una enfermedad de una mascota
+    await pool.query('DELETE FROM Mascotas_Enfermedades WHERE id_mascota = ? AND id_enfermedad = ?', [req.params.id, req.body.id_enfermedad])
+    res.json({ mensaje: 'Enfermedad eliminada correctamente' })
+}
+
+ export const getShelter = async (req, res) => { // Obtener el refugio de una mascota
+    const [rows] = await pool.query('`SELECT * FROM Perrera INNER JOIN Perrera_Mascotas ON Perrera.id = Perrera_Mascotas.id_perrera WHERE Perrera_mascotas.id_mascota = ?', [req.params.id])
+    res.json(rows)
+}
+
+export const addShelter = async (req, res) => { // Añadir una mascota a un refugio
+    await pool.query('INSERT INTO Perrera_Mascotas (id_perrera, id_mascota) VALUES (?,?)', [req.params.id, req.body.id_mascota])
+    res.json({ mensaje: 'Mascota añadida correctamente' })
+}
+
+export const deleteShelter = async (req, res) => { // Eliminar una mascota de un refugio
+    await pool.query('DELETE FROM Perrera_Mascotas WHERE id_perrera = ? AND id_mascota = ?', [req.params.id, req.body.id_mascota])
+    res.json({ mensaje: 'Mascota eliminada correctamente' })
+}
+
+export const getFotos = async (req, res) => { // Obtener las fotos de una mascota
+    const [rows] = await pool.query('SELECT * FROM FotosMascotas WHERE id_mascota = ?', [req.params.id])
+    res.json(rows)
+}
+
+export const addFoto = async (req, res) => { // Añadir una foto a una mascota
+    await pool.query('INSERT INTO FotosMascotas (id_mascota, url) VALUES (?,?)', [req.params.id, req.body.url])
+    res.json({ mensaje: 'Foto añadida correctamente' })
+}
+
+export const deleteFoto = async (req, res) => { // Eliminar una foto de una mascota
+    await pool.query('DELETE FROM FotosMascotas WHERE id_mascota = ? AND url = ?', [req.params.id, req.body.url])
+    res.json({ mensaje: 'Foto eliminada correctamente' })
+}
+
+export const getVideos = async (req, res) => { // Obtener los videos de una mascota
+    const [rows] = await pool.query('SELECT * FROM VideosMascotas WHERE id_mascota = ?', [req.params.id])
+    res.json(rows)
+}
+
+export const addVideo = async (req, res) => { // Añadir un video a una mascota
+    await pool.query('INSERT INTO VideosMascotas (id_mascota, url) VALUES (?,?)', [req.params.id, req.body.url])
+    res.json({ mensaje: 'Video añadido correctamente' })
+}
+
+export const deleteVideo = async (req, res) => { // Eliminar un video de una mascota
+    await pool.query('DELETE FROM VideosMascotas WHERE id_mascota = ? AND url = ?', [req.params.id, req.body.url])
+    res.json({ mensaje: 'Video eliminado correctamente' })
+}
+
     
     
     

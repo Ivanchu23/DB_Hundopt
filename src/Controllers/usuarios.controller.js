@@ -106,7 +106,7 @@ export const ownADog = async (req, res) => { //añade un perro a la lista de per
 
 export const userStats = async (req, res) => { //devuelve las estadísticas de un usuario
   try {
-    const result = await pool.query('SELECT * FROM Usuarios_Estadisticas WHERE id_user = ?', [req.params.id]);
+    const result = await pool.query('SELECT * FROM Usuarios_Caracteristicas WHERE id_user = ?', [req.params.id]);
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -115,7 +115,7 @@ export const userStats = async (req, res) => { //devuelve las estadísticas de u
 
 export const updateUserStats = async (req, res) => { //actualiza las estadísticas de un usuario, recibe id y los stats del perro
   try {
-    const result = await pool.query('UPDATE Usuarios_Estadisticas SET ? WHERE id_user = ?', [req.body, req.params.id]);
+    const result = await pool.query('UPDATE Usuarios_Caracteristicas SET ? WHERE id_user = ?', [req.body, req.params.id]);
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
