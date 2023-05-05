@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import{ getPerrera, getPerrera, createPerrera, updatePerrera, deletePerrera, getUsuariosLiked, getRedesSociales, addRedesSociales, updateRedesSociales, deleteRedesSociales, getDogs, addDog, deleteDog,updateDog} from '../Controllers/perrera.controller.js'
+import{ getPerreras, getPerrera, createPerrera, updatePerrera, deletePerrera, getUsuariosLiked, getRedesSociales, addRedesSociales, updateRedesSociales, deleteRedesSociales, getDogs, addDog, deleteDog} from '../Controllers/perrera.controller.js'
 
 const router = Router()
 
