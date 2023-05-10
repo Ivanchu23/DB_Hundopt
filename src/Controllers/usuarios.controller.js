@@ -26,8 +26,8 @@ export const getUser = async (req, res) => { //devuelve un usuario
 
 
 export const createUser = async (req, res) => { //crea un usuario
-    const { nombre, email, pw, telefono } = req.body
-    if (nombre == null || email == null || pw == null || telefono == null) {
+
+    if (req.nombre.body== null || req.email.body == null || req.pw.body == null || req.telefono.body == null) {
         return res.status(400).json({ msg: 'Faltan campos necesarios '})
     }
     //const query = 'SELECT * FROM Usuarios WHERE email = ?';
