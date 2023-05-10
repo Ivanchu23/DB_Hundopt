@@ -15,7 +15,7 @@ router.delete('/users/:id', deleteUser)
 
 router.patch('/users/:id', updateUser)
 
-router.get('/login', login)
+router.post('/login', login)
 
 router.get('/users/likedDogs/:id', likedDogs)
 
