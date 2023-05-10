@@ -87,7 +87,7 @@ export const deleteUser = async (req, res) => { //borra un usuario
 export const login = async (req, res) => { //devuelve el token de un usuario
     const [rows] = await pool.query('SELECT * FROM Usuarios WHERE email = ? AND pw = ?', [req.body.email, req.body.pw])
     if (rows.length > 0) {
-    const token = jwt.sign({ userId: usuario.id }, 'secreto', { expiresIn: '3h' });
+    const token = jwt.sign({ userId: Usuarios.id }, 'secreto', { expiresIn: '3h' });
     res.json({ auth: true, token: token });
     } else {
     res.json({ auth: false, token: null });
