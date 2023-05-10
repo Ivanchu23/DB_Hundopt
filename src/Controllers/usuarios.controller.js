@@ -16,7 +16,7 @@ export const getUsers = async (req, res) => { //devuelve todos los usuarios
 
 export const getUser = async (req, res) => { //devuelve un usuario
   try {
-    const [rows] = await pool.query('SELECT * FROM Usuarios WHERE id = ?', [req.params.id])
+    const [rows] = await pool.query('SELECT * FROM Usuarios WHERE email = ?', [req.params.email])
     res.json(rows)
   } catch (error) {
     console.error(error);
