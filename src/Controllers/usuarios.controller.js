@@ -31,7 +31,7 @@ export const createUser = async (req, res) => { //crea un usuario
         return res.status(400).json({ msg: 'Faltan campos necesarios '})
     }
     const query = 'SELECT * FROM Usuarios WHERE email = ?';
-  pool.query (query, [email], (error, results) => { //comprueba si el email ya está registrado
+  await pool.query (query, [email], async (error, results) => { //comprueba si el email ya está registrado
     if (error) {
       console.error(error);
       return res.status(500).json({ mensaje: 'Error al registrar usuario' });
@@ -42,9 +42,7 @@ export const createUser = async (req, res) => { //crea un usuario
     }
     //await pool.query('INSERT INTO Users (nombre, email, pw, telefono) VALUES (?,?,?,?)', [req.body.nombre, req.body.email, req.body.pw, req.body.telefono])   
 
-    const nuevoUsuario = { nombre, email, pw, telefono };
-    const insertQuery = 'INSERT INTO Usuarios SET ?';
-    pool.query(insertQuery, nuevoUsuario, (error, results) => {
+    await pool.query('INSERT INTO Users (nombre, email, pw, telefono) VALUES (?,?,?,?)', [req.body.nombre, req.body.email, req.body.pw, req.body.telefono], (error, results) => {
       if (error) {
         console.error(error);
         return res.status(500).json({ mensaje: 'Error al registrar usuario' });
