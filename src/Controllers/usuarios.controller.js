@@ -30,8 +30,8 @@ export const createUser = async (req, res) => { //crea un usuario
     if (nombre == null || email == null || pw == null || telefono == null) {
         return res.status(400).json({ msg: 'Faltan campos necesarios '})
     }
-    const query = 'SELECT * FROM Usuarios WHERE email = ?';
-  await pool.query (query, [email], async (error, results) => { //comprueba si el email ya está registrado
+    //const query = 'SELECT * FROM Usuarios WHERE email = ?';
+    await pool.query ('SELECT * FROM Usuarios WHERE email =?', [req.email.body], async (error, results) => { //comprueba si el email ya está registrado
     if (error) {
       console.error(error);
       return res.status(500).json({ mensaje: 'Error al registrar usuario' });
