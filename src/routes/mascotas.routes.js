@@ -23,13 +23,13 @@ router.delete('/mascotas/deleteMascotaStat/:id', deleteStat) // Eliminar una sta
 
 router.get('/mascotas/getMascotaEnfermedades/:id', getMascotaEnfermedades) // Obtener las enfermedades de una mascota ok
 
-router.put('/mascotas/addEnfermedad/:id', addEnfermedad)
+router.put('/mascotas/addEnfermedad/:id', addEnfermedad)    // Agregar una enfermedad a una mascota ok
 
-router.delete('/mascotas/deleteEnfermedad/:id_mascota/:id_enfermedad', deleteEnfermedad)
+router.delete('/mascotas/deleteEnfermedad/:id_mascota/:id_enfermedad', deleteEnfermedad) // Eliminar una enfermedad de una mascota ok
 
-router.get('/mascotas/shelter/:id', getShelter)
+router.get('/mascotas/shelter/:id', getShelter) // Obtener el shelter de una mascota ok
 
-router.put('/mascotas/addShelter/:id_mascota/:id_shelter', addShelter)
+router.put('/mascotas/addShelter/', addShelter)
 
 router.delete('/mascotas/deleteShelter/:id_mascota/:id_shelter', deleteShelter)
 

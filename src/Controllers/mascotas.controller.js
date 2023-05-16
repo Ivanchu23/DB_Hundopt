@@ -141,14 +141,28 @@ export const getShelter = async (req, res) => {
   };
   
 
-export const addShelter = async (req, res) => { // Añadir una mascota a un refugio
-    try{
-        await pool.query('INSERT INTO Perrera_Mascotas (id_perrera, id_mascota) VALUES (?,?)', [req.params.id, req.body.id_mascota])
-        res.json({ mensaje: 'Mascota añadida correctamente' })
+  export const addShelter = async (req, res) => {
+    try {
+      const { id_perrera, id_mascota } = req.body;
+  
+      // Obtener el valor actual de mascotas_id de la tabla Perrera
+      const existingData = await pool.query('SELECT mascotas_id FROM Perrera WHERE id = ?', [id_perrera]);
+      const mascotasId = existingData[0].mascotas_id;
+  
+      // Agregar el nuevo id_mascota al arreglo de mascotas existente
+      mascotasId.push(id_mascota);
+  
+      // Actualizar la fila en la tabla Perrera con el nuevo valor de mascotas_id
+      await pool.query('UPDATE Perrera SET mascotas_id = ? WHERE id = ?', [mascotasId, id_perrera]);
+  
+      res.json({ message: 'Mascota añadida correctamente' });
     } catch (error) {
-        res.status(500).json({ message: 'Error al añadir la mascota al refugio'});
+      console.error(error);
+      res.status(500).json({ message: 'Error al añadir la mascota al refugio' });
     }
-}
+  };
+  
+  
 
 export const deleteShelter = async (req, res) => { // Eliminar una mascota de un refugio
     try{
