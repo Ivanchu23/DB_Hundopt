@@ -63,14 +63,7 @@ export const getMascotaStats = async (req, res) => { // Obtener las estadística
         return res.status(400).json({ message: 'Las características ya están asociadas a la mascota' });
       }
   
-      // Filtrar las características nuevas que no estén ya insertadas
-      const uniqueIds = newIds.filter(id => !existingIds.includes(id));
-  
-      if (uniqueIds.length === 0) {
-        return res.status(400).json({ message: 'Las características ya existen en la mascota' });
-      }
-  
-      const values = uniqueIds.map(id => [id_mascota, id]);
+      const values = newIds.map(id => [id_mascota, id]);
       await pool.query('INSERT INTO Mascotas_Caracteristicas (id_mascota, id_caracteristica) VALUES ?', [values]);
   
       res.json({ message: 'Estadísticas de la mascota actualizadas correctamente' });
@@ -79,6 +72,7 @@ export const getMascotaStats = async (req, res) => { // Obtener las estadística
       res.status(500).json({ message: 'Error al actualizar las estadísticas de la mascota' });
     }
   };
+  
   
   
   
