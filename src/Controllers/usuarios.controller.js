@@ -142,7 +142,7 @@ export const userStats = async (req, res) => { //devuelve las estadísticas de u
 
 export const updateUserStats = async (req, res) => { //actualiza las estadísticas de un usuario, recibe id y los stats del perro
   try {
-    const result = await pool.query('UPDATE Usuarios_Caracteristicas SET ? WHERE id_user = ?', [req.body, req.params.id]);
+    const result = await pool.query('UPDATE Usuarios_Caracteristicas SET ? WHERE id_usuario = ?', [req.body, req.params.id]);
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ message: 'Error al actualizar estadísticas' });
