@@ -27,13 +27,14 @@ export const createPerrera = async (req, res) => {
     }
   
     try {
-      await pool.query('INSERT INTO Perrera (nombre, direccion, telefono, email, mascotas_id) VALUES (?, ?, ?, ?, ?)', [nombre, direccion, telefono, email, JSON.stringify(mascotas_id)]);
+      await pool.query('INSERT INTO Perrera (nombre, direccion, telefono, email, mascotas_id, foto) VALUES (?, ?, ?, ?, ?, NULL)', [nombre, direccion, telefono, email, JSON.stringify(mascotas_id)]);
       res.json({ mensaje: 'Perrera creada correctamente' });
     } catch (error) {
       console.error(error);
       return res.status(500).json({ mensaje: 'Error al crear la perrera' });
     }
   };
+  
   
   
 export const updatePerrera = async (req, res) => { //actualiza una perrera
