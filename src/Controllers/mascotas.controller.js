@@ -52,17 +52,30 @@ export const getMascotaStats = async (req, res) => { // Obtener las estadística
     try {
       const { id_mascota, id_caracteristicas } = req.body;
   
-      for (const id_caracteristica of id_caracteristicas) {
-        await pool.query('INSERT INTO Mascotas_Caracteristicas (id_mascota, id_caracteristica) VALUES (?, ?)', [id_mascota, id_caracteristica]);
+      // Obtener las características existentes de la mascota
+      const existingCharacteristics = await pool.query('SELECT id_caracteristica FROM Mascotas_Caracteristicas WHERE id_mascota = ?', [id_mascota]);
+      const existingIds = existingCharacteristics.map(row => row.id_caracteristica);
+  
+      // Filtrar las características nuevas que no están en las existentes
+      const newIds = id_caracteristicas.filter(id => !existingIds.includes(id));
+  
+      // Verificar si no hay nuevas características para insertar
+      if (newIds.length === 0) {
+        return res.json({ message: 'Las características ya están asociadas a la mascota' });
       }
+  
+      // Generar los valores para la inserción
+      const values = newIds.map(id => [id_mascota, id]);
+  
+      // Insertar las nuevas características en la tabla
+      await pool.query('INSERT INTO Mascotas_Caracteristicas (id_mascota, id_caracteristica) VALUES ?', [values]);
   
       res.json({ message: 'Estadísticas de la mascota actualizadas correctamente' });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Error al actualizar las estadísticas de la mascota' });
+      res.status(500).json({ message: 'Error al actualizar las estadísticas de la mascota' ,existingIds,newIds });
     }
   };
-  
   
 
 export const deleteStat = async (req, res) => { // Eliminar una estadística de una mascota
