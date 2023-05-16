@@ -60,20 +60,19 @@ export const getMascotaStats = async (req, res) => { // Obtener las estadística
       const newIds = id_caracteristicas.filter(id => !existingIds.includes(id));
   
       // Verificar si no hay nuevas características para insertar
-      if (newIds.length === 0) {
+      if (newIds.length == 0) {
         return res.json({ message: 'Las características ya están asociadas a la mascota' });
+      }else{
+        const values = newIds.map(id => [id_mascota, id]);
+  
+        // Insertar las nuevas características en la tabla
+        await pool.query('INSERT INTO Mascotas_Caracteristicas (id_mascota, id_caracteristica) VALUES ?', [values]);
+    
+        res.json({ message: 'Estadísticas de la mascota actualizadas correctamente' });
       }
-  
-      // Generar los valores para la inserción
-      const values = newIds.map(id => [id_mascota, id]);
-  
-      // Insertar las nuevas características en la tabla
-      await pool.query('INSERT INTO Mascotas_Caracteristicas (id_mascota, id_caracteristica) VALUES ?', [values]);
-  
-      res.json({ message: 'Estadísticas de la mascota actualizadas correctamente' });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Error al actualizar las estadísticas de la mascota' ,existingIds,newIds });
+      res.status(500).json({ message: 'Error al actualizar las estadísticas de la mascota' });
     }
   };
   
