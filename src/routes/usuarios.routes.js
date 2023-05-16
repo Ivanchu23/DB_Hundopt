@@ -25,7 +25,7 @@ router.get('/users/ownedDogs/:id', ownedDogs) //devuelve los perros que tiene un
 
 router.put('/users/ownADog/:id_user/:id_mascota', ownADog) //añade un perro a la lista de perros que tiene un usuario ok
 
-router.get('/users/userStats/:id', userStats)
+router.get('/users/userStats/:id', userStats) //devuelve las estadísticas de un usuario ok
 
 router.put('/users/userStats/:id', updateUserStats)
 
