@@ -35,7 +35,7 @@ router.delete('/mascotas/deleteShelter/:id_mascota/:id_shelter', deleteShelter)
 
 router.get('/mascotas/fotos/:id', getFotos)
 
-router.put('/mascotas/addFoto/:id_mascota/:id_foto', addFoto)
+router.put('/mascotas/addFoto/:id_mascota', addFoto)
 
 router.delete('/mascotas/deleteFoto/:id_mascota/:id_foto', deleteFoto)
 
