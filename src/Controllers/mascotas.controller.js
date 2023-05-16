@@ -48,10 +48,10 @@ export const getMascotaStats = async (req, res) => { // Obtener las estadística
     }
   };
   
-  export const updateMascotaStats = async (req, res) => { // Actualizar las estadísticas de una mascota
+  export const updateMascotaStats = async (req, res) => {
     try {
       // Obtener las características actuales de la mascota
-      const oldStats = await pool.query('SELECT * FROM Mascotas_Caracteristicas WHERE mascota_id = ?', [req.params.id]);
+      const oldStats = await pool.query('SELECT * FROM Mascotas_Caracteristicas WHERE id_mascota = ?', [req.params.id]);
       const actuales = oldStats.rows.map(row => row.id_caracteristica);
   
       // Obtener las nuevas características del body
@@ -62,7 +62,7 @@ export const getMascotaStats = async (req, res) => { // Obtener las estadística
   
       // Generar un array de promesas para las consultas de inserción
       const promises = paraAgregar.map(caracteristica => {
-        return pool.query('INSERT INTO Mascotas_Caracteristicas (mascota_id, id_caracteristica) VALUES (?, ?)', [req.params.id, caracteristica]);
+        return pool.query('INSERT INTO Mascotas_Caracteristicas (id_mascota, id_caracteristica) VALUES (?, ?)', [req.params.id, caracteristica]);
       });
   
       // Ejecutar todas las consultas de inserción en paralelo
@@ -74,6 +74,7 @@ export const getMascotaStats = async (req, res) => { // Obtener las estadística
       res.status(500).json({ mensaje: 'Error al actualizar las características de mascota' });
     }
   };
+  
   
   
 
