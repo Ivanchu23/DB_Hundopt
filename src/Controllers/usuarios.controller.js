@@ -45,8 +45,6 @@ export const createUser = async (req, res) => {
   }
 }
 
-
-
 export const updateFullUser = async (req, res) => { //actualiza un usuario de forma completa
   try {
     await pool.query('UPDATE Usuarios SET nombre = ?, email = ?, pw = ?, telefono = ? WHERE id = ?', [req.body.nombre, req.body.email, req.body.pw, req.body.telefono, req.params.id])
