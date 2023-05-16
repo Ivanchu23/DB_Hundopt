@@ -27,26 +27,27 @@ export const getUser = async (req, res) => { //devuelve un usuario
 
 export const createUser = async (req, res) => {
   const { nombre, email, pw, telefono } = req.body;
-  
+
   if (!nombre || !email || !pw || !telefono) {
     return res.status(400).json({ mensaje: 'Faltan campos necesarios' });
   }
-  
+
   try {
-    const existingUser = await pool.query('SELECT * FROM Usuarios WHERE email = ?', [email]);
-    
-    if (existingUser.length > 0) {
-      return res.status(409).json({ mensaje: 'El correo electrónico ya está registrado', existingUser});
+    const existingUser = await pool.query('SELECT email FROM Usuarios WHERE email = ?', [email]);
+
+    if (existingUser.rows.length > 0) {
+      return res.status(409).json({ mensaje: 'El correo electrónico ya está registrado', existingUser: existingUser.rows });
     }
-    
+
     await pool.query('INSERT INTO Usuarios (nombre, email, pw, telefono) VALUES (?, ?, ?, ?)', [nombre, email, pw, telefono]);
-    
+
     return res.status(201).json({ mensaje: 'Usuario registrado exitosamente' });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ mensaje: 'Error al registrar usuario' });
   }
 };
+
 
 
 export const updateFullUser = async (req, res) => { //actualiza un usuario de forma completa
