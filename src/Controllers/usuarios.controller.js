@@ -33,20 +33,16 @@ export const createUser = async (req, res) => {
   }
 
   try {
-    const existingUser = await pool.query('SELECT email FROM Usuarios WHERE email = ?', [email]);
-
-    if (existingUser.rows.length > 0) {
-      return res.status(409).json({ mensaje: 'El correo electrónico ya está registrado', existingUser: existingUser.rows });
+    const [rows] = await pool.query('SELECT * FROM Usuarios WHERE email = ?', [email])
+    if (rows.length > 0) {
+      return res.status(400).json({ mensaje: 'El usuario ya existe' });
     }
-
-    await pool.query('INSERT INTO Usuarios (nombre, email, pw, telefono) VALUES (?, ?, ?, ?)', [nombre, email, pw, telefono]);
-
-    return res.status(201).json({ mensaje: 'Usuario registrado exitosamente' });
+    await pool.query('INSERT INTO Usuarios SET ?', [req.body])
+    res.json({ msg: 'Usuario creado' })
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ mensaje: 'Error al registrar usuario' });
+    return res.status(500).json({ mensaje: 'Error al crear usuario' });
   }
-};
 
 
 
