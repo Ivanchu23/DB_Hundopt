@@ -52,7 +52,7 @@ export const getMascotaStats = async (req, res) => { // Obtener las estadística
     try {
       // Obtener las características actuales de la mascota
       const [oldStats] = await pool.query('SELECT * FROM Mascotas_Caracteristicas WHERE id_mascota = ?', [req.params.id]);
-      const actuales = oldStats.rows.map(row => row.id_caracteristica);
+      const actuales = oldStats.map(row => row.id_caracteristica);
   
       // Obtener las nuevas características del body
       const nuevasCaracteristicas = req.body.caracteristicas;
@@ -74,6 +74,7 @@ export const getMascotaStats = async (req, res) => { // Obtener las estadística
       res.status(500).json({ mensaje: 'Error al actualizar las características de mascota' });
     }
   };
+  
   
   
   
