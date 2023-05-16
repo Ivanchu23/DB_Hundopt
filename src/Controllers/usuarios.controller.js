@@ -143,15 +143,15 @@ export const userStats = async (req, res) => { //devuelve las estadísticas de u
 export const updateUserStats = async (req, res) => {
   try {
     const { id_usuario, id_caracteristicas } = req.body;
-    const info = await pool.query('SELECT * FROM Usuarios_Caracteristicas WHERE id_usuario = ?', [id_usuario]);
-    const existingCharacteristics = info.rows.map(row => row.id_caracteristica);
-    const newCharacteristics = id_caracteristicas.filter(id => !existingCharacteristics.includes(id));
+    const existingCharacteristics = await pool.query('SELECT id_caracteristica FROM Usuarios_Caracteristicas WHERE id_usuario = ?', [id_usuario]);
+    const existingIds = existingCharacteristics.map(row => row.id_caracteristica);
+    const newIds = id_caracteristicas.filter(id => !existingIds.includes(id));
 
-    if (newCharacteristics.length === 0) {
+    if (newIds.length === 0) {
       return res.json({ message: 'Las características ya están asociadas al usuario' });
     }
 
-    const values = newCharacteristics.map(id => [id_usuario, id]);
+    const values = newIds.map(id => [id_usuario, id]);
     const result = await pool.query('INSERT INTO Usuarios_Caracteristicas (id_usuario, id_caracteristica) VALUES ?', [values]);
 
     res.json({ message: 'Estadísticas del usuario actualizadas correctamente' });
@@ -159,6 +159,7 @@ export const updateUserStats = async (req, res) => {
     res.status(500).json({ message: 'Error al actualizar estadísticas' });
   }
 };
+
 
 
 
