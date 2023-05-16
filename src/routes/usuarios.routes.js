@@ -27,13 +27,13 @@ router.put('/users/ownADog/:id_user/:id_mascota', ownADog) //añade un perro a l
 
 router.get('/users/userStats/:id', userStats) //devuelve las estadísticas de un usuario ok
 
-router.post('/users/userStats/', updateUserStats)
+router.post('/users/userStats', updateUserStats)
 
 router.post('/logout', logout)
 
 router.get('/users/likedShelters/:id', likedShelters) //devuelve los refugios que le gustan a un usuario ok
 
-router.post('/users/likeAShelter/', likeAShelter) //añade un refugio a la lista de refugios que le gustan a un usuario ok
+router.post('/users/likeAShelter', likeAShelter) //añade un refugio a la lista de refugios que le gustan a un usuario ok
 
 
 export default router;
