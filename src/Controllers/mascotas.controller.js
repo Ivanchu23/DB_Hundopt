@@ -55,10 +55,10 @@ export const getMascotaStats = async (req, res) => { // Obtener las estadística
       // Obtener las características existentes de la mascota
       const existingCharacteristics = await pool.query('SELECT id_caracteristica FROM Mascotas_Caracteristicas WHERE id_mascota = ?', [id_mascota]);
       const existingIds = existingCharacteristics.rows.map(row => row.id_caracteristica);
-  
+      return res.status(300).json(existingIds)
       // Filtrar las características nuevas que no estén en las existentes
       const newIds = id_caracteristicas.filter(id => !existingIds.includes(id));
-      return res.status(300).json(newIds)
+      
   
       if (newIds.length === 0) {
         return res.status(400).json({ message: 'Las características ya están asociadas a la mascota' });
