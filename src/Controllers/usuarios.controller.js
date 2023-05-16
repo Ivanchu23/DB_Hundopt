@@ -25,32 +25,27 @@ export const getUser = async (req, res) => { //devuelve un usuario
 }
 
 
-export const createUser = async (req, res) => { //crea un usuario
+export const createUser = async (req, res) => {
   const { nombre, email, pw, telefono } = req.body;
-    if (req.nombre.body == null || req.email.body == null || req.pw.body == null || req.telefono.body == null) {
-        return res.status(400).json({ msg: 'Faltan campos necesarios '})
-    }
-    //const query = 'SELECT * FROM Usuarios WHERE email = ?';
-    await pool.query ('SELECT * FROM Usuarios WHERE email =?', [req.email.body], async (error, results) => { //comprueba si el email ya está registrado
-    if (error) {
-      console.error(error);
-      return res.status(500).json({ mensaje: 'Error al registrar usuario' });
-    }
-
-    if (results.length > 0) {
+  
+  if (!nombre || !email || !pw || !telefono) {
+    return res.status(400).json({ mensaje: 'Faltan campos necesarios' });
+  }
+  
+  try {
+    const existingUser = await pool.query('SELECT * FROM Usuarios WHERE email = ?', [email]);
+    
+    if (existingUser.length > 0) {
       return res.status(409).json({ mensaje: 'El correo electrónico ya está registrado' });
     }
-    //await pool.query('INSERT INTO Users (nombre, email, pw, telefono) VALUES (?,?,?,?)', [req.body.nombre, req.body.email, req.body.pw, req.body.telefono])   
-
-    await pool.query('INSERT INTO Users (nombre, email, pw, telefono) VALUES (?,?,?,?)', [req.body.nombre, req.body.email, req.body.pw, req.body.telefono], (error, results) => {
-      if (error) {
-        console.error(error);
-        return res.status(500).json({ mensaje: 'Error al registrar usuario' });
-      }
-      
-      return res.status(201).json({ mensaje: 'Usuario registrado exitosamente' });
-    });
-  });
+    
+    await pool.query('INSERT INTO Usuarios (nombre, email, pw, telefono) VALUES (?, ?, ?, ?)', [nombre, email, pw, telefono]);
+    
+    return res.status(201).json({ mensaje: 'Usuario registrado exitosamente' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ mensaje: 'Error al registrar usuario' });
+  }
 };
 
 
