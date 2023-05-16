@@ -145,15 +145,7 @@ export const getShelter = async (req, res) => {
     try {
       const { id_perrera, id_mascota } = req.body;
   
-      // Obtener el valor actual de mascotas_id de la tabla Perrera
-      const existingData = await pool.query('SELECT mascotas_id FROM Perrera WHERE id = ?', [id_perrera]);
-      const mascotasId = existingData[0].mascotas_id;
-  
-      // Agregar el nuevo id_mascota al arreglo de mascotas existente
-      mascotasId.push(id_mascota);
-  
-      // Actualizar la fila en la tabla Perrera con el nuevo valor de mascotas_id
-      await pool.query('UPDATE Perrera SET mascotas_id = ? WHERE id = ?', [mascotasId, id_perrera]);
+      await pool.query('UPDATE Perrera SET mascotas_id = JSON_ARRAY_APPEND(mascotas_id, "$", ?) WHERE id = ?', [id_mascota, id_perrera]);
   
       res.json({ message: 'Mascota añadida correctamente' });
     } catch (error) {
@@ -161,6 +153,7 @@ export const getShelter = async (req, res) => {
       res.status(500).json({ message: 'Error al añadir la mascota al refugio' });
     }
   };
+  
   
   
 
