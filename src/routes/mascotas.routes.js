@@ -13,7 +13,7 @@ router.get('/mascotas/getMascota/:id', getMascota) // Obtener una mascota ok
 
 router.delete('/mascotas/deleteMascota/:id', deleteMascota) // Eliminar una mascota ok
 
-router.get('/mascotas/getMascotaStats/:id', getMascotaStats)
+router.get('/mascotas/getMascotaStats/:id', getMascotaStats) // Obtener los stats de una mascota ok
 
 router.put('/mascotas/updateMascota/:id', updateMascota)
 

@@ -48,27 +48,34 @@ export const getMascotaStats = async (req, res) => { // Obtener las estadística
     }
   };
   
-export const updateMascotaStats = async (req, res) => { // Actualizar las estadísticas de una mascota
-    
+  export const updateMascotaStats = async (req, res) => { // Actualizar las estadísticas de una mascota
     try {
-        // Obtener las características actuales de la mascota
-        const oldStats = await pool.query('SELECT * FROM Mascotas_Caracteristicas WHERE mascota_id = ?', [req.params.id]);
-        const actuales = oldStats.map(res => res.id_caracteristica);
-    
-        // Filtrar las nuevas características que no estén ya en la base de datos
-        const paraAgregar = req.body.caracteristicas.filter(caracteristica => !actuales.includes(caracteristica));
-    
-        // Agregar las nuevas características a la tabla mascotas_caracteristicas
-        paraAgregar.forEach(async caracteristica => {
-          await pool.query('INSERT INTO Mascotas_Caracteristicas (mascota_id, id_caracteristica) VALUES (?,?)', [req.params.id, caracteristica]);
-        });
-    
-        res.status(200).json({ mensaje: 'Características de mascota actualizadas correctamente' });
+      // Obtener las características actuales de la mascota
+      const oldStats = await pool.query('SELECT * FROM Mascotas_Caracteristicas WHERE mascota_id = ?', [req.params.id]);
+      const actuales = oldStats.rows.map(row => row.id_caracteristica);
+  
+      // Obtener las nuevas características del body
+      const nuevasCaracteristicas = req.body.caracteristicas;
+  
+      // Filtrar las características que no estén ya en la base de datos
+      const paraAgregar = nuevasCaracteristicas.filter(caracteristica => !actuales.includes(caracteristica));
+  
+      // Generar un array de promesas para las consultas de inserción
+      const promises = paraAgregar.map(caracteristica => {
+        return pool.query('INSERT INTO Mascotas_Caracteristicas (mascota_id, id_caracteristica) VALUES (?, ?)', [req.params.id, caracteristica]);
+      });
+  
+      // Ejecutar todas las consultas de inserción en paralelo
+      await Promise.all(promises);
+  
+      res.status(200).json({ mensaje: 'Características de mascota actualizadas correctamente' });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ mensaje: 'Error al actualizar las características de mascota' });
+      console.error(error);
+      res.status(500).json({ mensaje: 'Error al actualizar las características de mascota' });
     }
-};
+  };
+  
+  
 
 export const deleteStat = async (req, res) => { // Eliminar una estadística de una mascota
     try {
