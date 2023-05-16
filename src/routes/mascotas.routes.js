@@ -9,7 +9,7 @@ router.post('/mascotas', createMascota) // Crear una mascota ok
 
 router.get('/mascotas', getMascotas) // Obtener todas las mascotas ok
 
-router.get('/mascotas/getMascota/:id', getMascota) // Obtener una mascota ok
+router.get('/mascotas/:id', getMascota) // Obtener una mascota ok
 
 router.delete('/mascotas/deleteMascota/:id', deleteMascota) // Eliminar una mascota ok
 
