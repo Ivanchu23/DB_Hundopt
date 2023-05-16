@@ -124,7 +124,9 @@ export const deleteEnfermedad = async (req, res) => { // Eliminar una enfermedad
 
 export const getShelter = async (req, res) => {
     try {
-      const [rows] = await pool.query('SELECT * FROM Perrera INNER JOIN Perrera_Mascotas ON Perrera.id = Perrera_Mascotas.id_perrera WHERE Perrera_Mascotas.id_mascota = ?', [req.params.id]);
+      const mascotaId = req.params.id;
+      const [rows] = await pool.query('SELECT p.id, p.email, p.direccion, p.telefono, p.nombre FROM Perrera p WHERE FIND_IN_SET(?, p.mascotas_id)', [mascotaId]);
+  
       res.json(rows);
     } catch (error) {
       res.status(500).json({ message: 'Error al obtener el refugio de la mascota' });
