@@ -41,7 +41,7 @@ export const deleteMascota = async (req, res) => {// Eliminar una mascota
 
 export const getMascotaStats = async (req, res) => { // Obtener las estadísticas de una mascota
     try {
-      const [rows] = await pool.query('SELECT c.nombre FROM Mascotas_Caracteristicas mc JOIN Caracteristicas c ON mc.id_caracteristica = c.id WHERE mc.id_mascota = ?', [req.params.id]);
+      const [rows] = await pool.query('SELECT DISTINCT c.nombre FROM Mascotas_Caracteristicas mc JOIN Caracteristicas c ON mc.id_caracteristica = c.id WHERE mc.id_mascota = ?', [req.params.id]);
       res.json(rows);
     } catch (error) {
       res.status(500).json({ message: 'Error al obtener las estadísticas de la mascota' });
@@ -52,29 +52,18 @@ export const getMascotaStats = async (req, res) => { // Obtener las estadística
     try {
       const { id_mascota, id_caracteristicas } = req.body;
   
-      // Obtener las características existentes de la mascota
-      const existingCharacteristics = await pool.query('SELECT id_caracteristica FROM Mascotas_Caracteristicas WHERE id_mascota = ?', [id_mascota]);
-      const existingIds = existingCharacteristics.rows.map(row => row.id_caracteristica);
-      // Filtrar las características nuevas que no estén en las existentes
-      const newIds = id_caracteristicas.filter(id => !existingIds.includes(id));
-      
+      const promises = id_caracteristicas.map(id_caracteristica => {
+        return pool.query('INSERT INTO Mascotas_Caracteristicas (id_mascota, id_caracteristica) VALUES (?, ?)', [id_mascota, id_caracteristica]);
+      });
   
-      if (newIds.length === 0) {
-        return res.status(400).json({ message: 'Las características ya están asociadas a la mascota' });
-      }
-  
-      const values = newIds.map(id => [id_mascota, id]);
-      await pool.query('INSERT INTO Mascotas_Caracteristicas (id_mascota, id_caracteristica) VALUES ?', [values]);
+      await Promise.all(promises);
   
       res.json({ message: 'Estadísticas de la mascota actualizadas correctamente' });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Error al actualizar las estadísticas de la mascota' });
     }
-  };
-  
-  
-  
+  };  
   
 
 export const deleteStat = async (req, res) => { // Eliminar una estadística de una mascota
