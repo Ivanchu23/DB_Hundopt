@@ -17,11 +17,11 @@ router.get('/mascotas/getMascotaStats/:id', getMascotaStats) // Obtener los stat
 
 router.put('/mascotas/updateMascota/:id', updateMascota) // Actualizar una mascota ok
 
-router.post('/mascotas/updateMascotaStats', updateMascotaStats)
+router.post('/mascotas/updateMascotaStats', updateMascotaStats) // nuevas fucniona, viejas no
 
-router.delete('/mascotas/deleteMascotaStat/:id', deleteStat)
+router.delete('/mascotas/deleteMascotaStat/:id', deleteStat) // Eliminar una stat de una mascota ok
 
-router.get('/mascotas/getMascotaEnfermedades/:id', getMascotaEnfermedades)
+router.get('/mascotas/getMascotaEnfermedades/:id', getMascotaEnfermedades) // Obtener las enfermedades de una mascota ok
 
 router.put('/mascotas/addEnfermedad/:id', addEnfermedad)
 

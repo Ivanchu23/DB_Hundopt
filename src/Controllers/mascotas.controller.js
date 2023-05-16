@@ -122,14 +122,15 @@ export const deleteEnfermedad = async (req, res) => { // Eliminar una enfermedad
     }
 }
 
- export const getShelter = async (req, res) => { // Obtener el refugio de una mascota
-    try{
-        const [rows] = await pool.query('`SELECT * FROM Perrera INNER JOIN Perrera_Mascotas ON Perrera.id = Perrera_Mascotas.id_perrera WHERE Perrera_mascotas.id_mascota = ?', [req.params.id])
-        res.json(rows)
+export const getShelter = async (req, res) => {
+    try {
+      const [rows] = await pool.query('SELECT * FROM Perrera INNER JOIN Perrera_Mascotas ON Perrera.id = Perrera_Mascotas.id_perrera WHERE Perrera_Mascotas.id_mascota = ?', [req.params.id]);
+      res.json(rows);
     } catch (error) {
-        res.status(500).json({ message: 'Error al obtener el refugio de la mascota'});
+      res.status(500).json({ message: 'Error al obtener el refugio de la mascota' });
     }
-}
+  };
+  
 
 export const addShelter = async (req, res) => { // Añadir una mascota a un refugio
     try{
