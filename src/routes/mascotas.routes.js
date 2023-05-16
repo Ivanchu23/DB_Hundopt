@@ -17,7 +17,7 @@ router.get('/mascotas/getMascotaStats/:id', getMascotaStats) // Obtener los stat
 
 router.put('/mascotas/updateMascota/:id', updateMascota) // Actualizar una mascota ok
 
-router.post('/mascotas/updateMascotaStats/:id', updateMascotaStats)
+router.post('/mascotas/updateMascotaStats', updateMascotaStats)
 
 router.delete('/mascotas/deleteMascotaStat/:id', deleteStat)
 
