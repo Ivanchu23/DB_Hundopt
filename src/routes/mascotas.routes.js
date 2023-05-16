@@ -5,13 +5,13 @@ const router = Router();
 
 
 
-router.post('/mascotas', createMascota)
+router.post('/mascotas', createMascota) // Crear una mascota ok
 
-router.get('/mascotas', getMascotas)
+router.get('/mascotas', getMascotas) // Obtener todas las mascotas ok
 
-router.get('/mascotas/getMascota/:id', getMascota)
+router.get('/mascotas/getMascota/:id', getMascota) // Obtener una mascota ok
 
-router.delete('/mascotas/deleteMascota/:id', deleteMascota)
+router.delete('/mascotas/deleteMascota/:id', deleteMascota) // Eliminar una mascota ok
 
 router.get('/mascotas/getMascotaStats/:id', getMascotaStats)
 

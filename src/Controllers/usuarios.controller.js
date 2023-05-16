@@ -25,7 +25,7 @@ export const getUser = async (req, res) => { //devuelve un usuario
 }
 
 
-export const createUser = async (req, res) => {
+export const createUser = async (req, res) => { //crea un usuario, se asegura que no exista ya
   const { nombre, email, pw, telefono } = req.body;
 
   if (!nombre || !email || !pw || !telefono) {

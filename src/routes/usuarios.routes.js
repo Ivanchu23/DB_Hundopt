@@ -7,7 +7,7 @@ router.get('/users', getUsers) //devuelve todos los usuarios ok
 
 router.get('/users/:email', getUser) //devuelve un usuario ok
 
-router.post('/users', createUser)
+router.post('/users', createUser) //crea un usuario, se asegura que no exista ya ok
 
 router.put('/users/:id', updateFullUser) //actualiza un usuario de forma completa ok
 

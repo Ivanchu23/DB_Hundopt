@@ -42,7 +42,13 @@ export const deleteMascota = async (req, res) => {// Eliminar una mascota
 export const getMascotaStats = async (req, res) => { // Obtener las estadísticas de una mascota
     try {
         const [rows] = await pool.query('SELECT * FROM Mascotas_Caracteristicas WHERE id_mascota = ?', [req.params.id])
-        res.json(rows)
+        for (let j = 0; j < rows.length; j++) {
+            for (let i = 0; i < rows.length; i++) {
+                const [result] = await pool.query('SELECT nombre FROM Caracteristicas WHERE id = ?', [rows[i].id_caracteristica])
+                rows[i].nombre = result[j].nombre
+            }
+        }
+        
     } catch (error) {
         res.status(500).json({ message: 'Error al obtener las estadísticas de la mascota'});
     }
