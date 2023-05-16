@@ -36,7 +36,7 @@ export const createUser = async (req, res) => {
     const existingUser = await pool.query('SELECT * FROM Usuarios WHERE email = ?', [email]);
     
     if (existingUser.length > 0) {
-      return res.status(409).json({ mensaje: 'El correo electrónico ya está registrado' });
+      return res.status(409).json({ mensaje: 'El correo electrónico ya está registrado', existingUser});
     }
     
     await pool.query('INSERT INTO Usuarios (nombre, email, pw, telefono) VALUES (?, ?, ?, ?)', [nombre, email, pw, telefono]);
