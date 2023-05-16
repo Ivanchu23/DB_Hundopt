@@ -143,7 +143,7 @@ export const userStats = async (req, res) => { //devuelve las estadísticas de u
 export const updateUserStats = async (req, res) => {
   try {
     const { id_caracteristicas } = req.body; // Suponemos que se envían las ID de características como un array en req.body.id_caracteristicas
-    const info = await pool.query('SELECT * FROM Usuarios_Caracteristicas WHERE id_usuario = ?', [req.params.id]);
+    const info = await pool.query('SELECT * FROM Usuarios_Caracteristicas WHERE id_usuario = ?', [req.body.id]);
     const existingCharacteristics = info.rows.map(row => row.id_caracteristica);
     const newCharacteristics = id_caracteristicas.filter(id => !existingCharacteristics.includes(id));
 

@@ -27,7 +27,7 @@ router.put('/users/ownADog/:id_user/:id_mascota', ownADog) //añade un perro a l
 
 router.get('/users/userStats/:id', userStats) //devuelve las estadísticas de un usuario ok
 
-router.post('/users/userStats/:id', updateUserStats)
+router.post('/users/userStats/', updateUserStats)
 
 router.post('/logout', logout)
 
