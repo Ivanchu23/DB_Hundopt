@@ -58,6 +58,7 @@ export const getMascotaStats = async (req, res) => { // Obtener las estadística
   
       // Filtrar las características nuevas que no estén en las existentes
       const newIds = id_caracteristicas.filter(id => !existingIds.includes(id));
+      return res.status(300).json(newIds)
   
       if (newIds.length === 0) {
         return res.status(400).json({ message: 'Las características ya están asociadas a la mascota' });
