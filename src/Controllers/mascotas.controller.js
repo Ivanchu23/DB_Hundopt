@@ -53,13 +53,18 @@ export const getMascotaStats = async (req, res) => { // Obtener las estadística
       const { id_mascota, id_caracteristicas } = req.body;
       const existingCharacteristics = await pool.query('SELECT id_caracteristica FROM Mascotas_Caracteristicas WHERE id_mascota = ?', [id_mascota]);
       const existingIds = existingCharacteristics.map(row => row.id_caracteristica);
+      // Filtrar las características nuevas que no estén en las existentes
       const newIds = id_caracteristicas.filter(id => !existingIds.includes(id));
-  
       if (newIds.length === 0) {
         return res.status(400).json({ message: 'Las características ya están asociadas a la mascota' });
       }
+      // Filtrar las características nuevas que no estén ya insertadas
+      const uniqueIds = newIds.filter(id => !existingIds.includes(id));
   
-      const values = newIds.map(id => [id_mascota, id]);
+      if (uniqueIds.length === 0) {
+        return res.status(400).json({ message: 'Las características ya existen en la mascota' });
+      }
+      const values = uniqueIds.map(id => [id_mascota, id]);
       const result = await pool.query('INSERT INTO Mascotas_Caracteristicas (id_mascota, id_caracteristica) VALUES ?', [values]);
   
       res.json({ message: 'Estadísticas de la mascota actualizadas correctamente' });
