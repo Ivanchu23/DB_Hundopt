@@ -131,20 +131,14 @@ export const ownADog = async (req, res) => { //añade un perro a la lista de per
   }
 };
 
-export const userStats = async (req, res) => {
+export const userStats = async (req, res) => { //devuelve las estadísticas de un usuario
   try {
     const result = await pool.query('SELECT * FROM Usuarios_Caracteristicas WHERE id_usuario = ?', [req.params.id]);
-    const stats = result.rows; // Suponiendo que los datos se encuentran en la propiedad 'rows' del resultado
-
-    console.log(stats); // Imprimir los datos en la consola para verificar si se obtienen correctamente
-
-    res.status(200).json(stats);
+    res.status(200).json(result);
   } catch (error) {
-    console.error(error); // Imprimir el error en la consola para verificar si hay algún problema
-    res.status(500).json({ message: 'Error al obtener las estadísticas del usuario' });
-  }
+    res.status(500).json({ message: 'El usuario no tiene estadísticas asociadas'});
+  } 
 };
-
 
 export const updateUserStats = async (req, res) => { //actualiza las estadísticas de un usuario, recibe id y los stats del perro
   try {
