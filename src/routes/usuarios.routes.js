@@ -33,7 +33,7 @@ router.post('/logout', logout)
 
 router.get('/users/likedShelters/:id', likedShelters) //devuelve los refugios que le gustan a un usuario ok
 
-router.post('/users/likeAShelter/:id_user/:id_shelter', likeAShelter)
+router.post('/users/likeAShelter/', likeAShelter)
 
 
 export default router;

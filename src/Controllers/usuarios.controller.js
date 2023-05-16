@@ -177,7 +177,7 @@ export const likedShelters = async (req, res) => { //devuelve todos los refugios
 
 export const likeAShelter = async (req, res) => { //añade un refugio a la lista de refugios que le gustan a un usuario
   try {
-    const result = await pool.query('INSERT INTO Usuarios_Perreras (id_usuario, id_perrera) VALUES (?,?)', [req.params.id_usuario, req.params.id_perrera]);
+    const result = await pool.query('INSERT INTO Usuarios_Perreras (id_usuario, id_perrera) VALUES (?,?)', [req.body.id_usuario, req.body.id_perrera]);
     res.status(200).json(result);
   }
   catch (error) {
