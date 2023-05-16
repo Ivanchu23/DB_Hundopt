@@ -27,10 +27,6 @@ export const createPerrera = async (req, res) => {
     }
   
     try {
-      const [rows] = await pool.query('SELECT * FROM Perrera WHERE email = ?', [email]);
-      if (rows.length > 0) {
-        return res.status(400).json({ mensaje: 'La perrera ya existe' });
-      }
       await pool.query('INSERT INTO Perrera (nombre, direccion, telefono, email, mascotas_id) VALUES (?, ?, ?, ?, ?)', [nombre, direccion, telefono, email, JSON.stringify(mascotas_id)]);
       res.json({ mensaje: 'Perrera creada correctamente' });
     } catch (error) {
