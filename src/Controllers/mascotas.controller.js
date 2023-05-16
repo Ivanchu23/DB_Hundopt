@@ -52,18 +52,17 @@ export const getMascotaStats = async (req, res) => { // Obtener las estadística
     try {
       const { id_mascota, id_caracteristicas } = req.body;
   
-      const promises = id_caracteristicas.map(id_caracteristica => {
-        return pool.query('INSERT INTO Mascotas_Caracteristicas (id_mascota, id_caracteristica) VALUES (?, ?)', [id_mascota, id_caracteristica]);
-      });
-  
-      await Promise.all(promises);
+      for (const id_caracteristica of id_caracteristicas) {
+        await pool.query('INSERT INTO Mascotas_Caracteristicas (id_mascota, id_caracteristica) VALUES (?, ?)', [id_mascota, id_caracteristica]);
+      }
   
       res.json({ message: 'Estadísticas de la mascota actualizadas correctamente' });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Error al actualizar las estadísticas de la mascota' });
     }
-  };  
+  };
+  
   
 
 export const deleteStat = async (req, res) => { // Eliminar una estadística de una mascota
