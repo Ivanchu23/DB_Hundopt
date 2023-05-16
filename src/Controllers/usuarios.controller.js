@@ -146,7 +146,8 @@ export const updateUserStats = async (req, res) => { //actualiza las estadístic
     const info = await pool.query('SELECT * FROM Usuarios_Caracteristicas WHERE id_usuario = ?', [req.params.id]);
     for (let i = 0; i < info.length; i++) {
       if (info[i].id_caracteristica == req.body.id_caracteristica) {
-        notOK = notOK +1;
+        notOK = notOK + 1;
+        res.json({ message: 'Esta caractaristica ya la tiene el usuario' });
       }
       if (notOK = 0){
         const result = await pool.query('INSERT INTO Usuarios_Caracteristicas (id_usuario, id_caracteristica) VALUES (?,?)', [req.params.id, req.body.id_caracteristica]);
