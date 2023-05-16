@@ -140,23 +140,26 @@ export const userStats = async (req, res) => { //devuelve las estadísticas de u
   } 
 };
 
-export const updateUserStats = async (req, res) => { //actualiza las estadísticas de un usuario, recibe id y los stats del perro
+export const updateUserStats = async (req, res) => {
   try {
-    const notOK = 0;
+    const { id_caracteristicas } = req.body; // Suponemos que se envían las ID de características como un array en req.body.id_caracteristicas
     const info = await pool.query('SELECT * FROM Usuarios_Caracteristicas WHERE id_usuario = ?', [req.params.id]);
-    for (let i = 0; i < info.length; i++) {
-      if (info[i].id_caracteristica == req.body.id_caracteristica) {
-        notOK = notOK + 1;
-        res.json({ message: 'Esta caractaristica ya la tiene el usuario' });
-      }
-      if (notOK = 0){
-        const result = await pool.query('INSERT INTO Usuarios_Caracteristicas (id_usuario, id_caracteristica) VALUES (?,?)', [req.params.id, req.body.id_caracteristica]);
-      }
+    const existingCharacteristics = info.rows.map(row => row.id_caracteristica);
+    const newCharacteristics = id_caracteristicas.filter(id => !existingCharacteristics.includes(id));
+
+    if (newCharacteristics.length === 0) {
+      return res.json({ message: 'Las características ya están asociadas al usuario' });
     }
+    const values = newCharacteristics.map(id => [req.params.id, id]);
+    const result = await pool.query('INSERT INTO Usuarios_Caracteristicas (id_usuario, id_caracteristica) VALUES ?', [values]);
+
+    res.json({ message: 'Estadísticas del usuario actualizadas correctamente' });
   } catch (error) {
     res.status(500).json({ message: 'Error al actualizar estadísticas' });
   }
 };
+
+
 
 export const logout = async (req, res) => { //cierra sesión
   res.json({ auth: false, token: null });
