@@ -19,15 +19,27 @@ export const getPerrera = async (req, res) => { //devuelve una perrera
     }
 }
 
-export const createPerrera = async (req, res) => { //crea una perrera
-    try {
-        await pool.query('INSERT INTO Perrera (nombre, direccion, telefono, email) VALUES (?,?,?,?)', [req.body.nombre, req.body.direccion, req.body.telefono, req.body.email])
-        res.json({ mensaje: 'Perrera creada correctamente' })
-    } catch (error) {
-        res.status(500).json({ message: 'Error al crear la perrera' })
+export const createPerrera = async (req, res) => {
+    const { nombre, direccion, telefono, email, mascotas_id } = req.body;
+  
+    if (!nombre || !direccion || !telefono || !email || !mascotas_id) {
+      return res.status(400).json({ mensaje: 'Faltan campos necesarios' });
     }
-}
-
+  
+    try {
+      const [rows] = await pool.query('SELECT * FROM Perrera WHERE email = ?', [email]);
+      if (rows.length > 0) {
+        return res.status(400).json({ mensaje: 'La perrera ya existe' });
+      }
+      await pool.query('INSERT INTO Perrera (nombre, direccion, telefono, email, mascotas_id) VALUES (?, ?, ?, ?, ?)', [nombre, direccion, telefono, email, JSON.stringify(mascotas_id)]);
+      res.json({ mensaje: 'Perrera creada correctamente' });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ mensaje: 'Error al crear la perrera' });
+    }
+  };
+  
+  
 export const updatePerrera = async (req, res) => { //actualiza una perrera
     try {
         await pool.query('UPDATE Perrera SET nombre = ?, direccion = ?, telefono = ?, email = ? WHERE id = ?', [req.body.nombre, req.body.direccion, req.body.telefono, req.body.email, req.params.id])

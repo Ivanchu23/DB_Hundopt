@@ -127,7 +127,7 @@ export const getShelter = async (req, res) => {
       const mascotaId = req.params.id;
   
       const query = `
-        SELECT id, nombre, email
+        SELECT DISTINCT id, nombre, email
         FROM Perrera
         WHERE JSON_CONTAINS(mascotas_id, CAST(? AS JSON), '$')
       `;
