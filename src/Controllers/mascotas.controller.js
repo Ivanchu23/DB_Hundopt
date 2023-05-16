@@ -56,7 +56,7 @@ export const getMascotaStats = async (req, res) => { // Obtener las estadística
       const newIds = id_caracteristicas.filter(id => !existingIds.includes(id));
   
       if (newIds.length === 0) {
-        return res.json({ message: 'Las características ya están asociadas a la mascota' });
+        return res.status(400).json({ message: 'Las características ya están asociadas a la mascota' });
       }
   
       const values = newIds.map(id => [id_mascota, id]);
@@ -67,6 +67,7 @@ export const getMascotaStats = async (req, res) => { // Obtener las estadística
       res.status(500).json({ message: 'Error al actualizar las estadísticas de la mascota' });
     }
   };
+  
   
 
 export const deleteStat = async (req, res) => { // Eliminar una estadística de una mascota
