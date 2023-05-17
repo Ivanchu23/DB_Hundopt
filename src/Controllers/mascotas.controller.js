@@ -220,6 +220,70 @@ export const deleteVideo = async (req, res) => { // Eliminar un video de una mas
     }
 }
 
+export const getEnfermedades = async (req, res) => { // Obtener las enfermedades totales
+    try {
+        const [rows] = await pool.query('SELECT * FROM Enfermedades')
+        res.json(rows)
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Error al obtener las enfermedades'});
+    }
+
+}
+
+export const addEnfermedadTotal = async (req, res) => { // Añadir una enfermedad total
+    try {
+        await pool.query('INSERT INTO Enfermedades (nombre) VALUES (?)', [req.body.nombre])
+        res.json({ mensaje: 'Enfermedad añadida correctamente' })
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Error al añadir la enfermedad'});
+    }
+}
+
+export const deleteEnfermedadTotal = async (req, res) => { // Eliminar una enfermedad total
+    try {
+        await pool.query('DELETE FROM Enfermedades WHERE id = ?', [req.params.id])
+        res.json({ mensaje: 'Enfermedad eliminada correctamente' })
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Error al eliminar la enfermedad'});
+    }
+}
+
+export const getCaracteristicas = async (req, res) => { // Obtener las caracteristicas totales
+    try {
+        const [rows] = await pool.query('SELECT * FROM Caracteristicas')
+        res.json(rows)
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Error al obtener las caracteristicas'});
+    }
+
+}
+
+export const addCaracteristicaTotal = async (req, res) => { // Añadir una caracteristica total
+    try {
+        await pool.query('INSERT INTO Caracteristicas (nombre) VALUES (?)', [req.body.nombre])
+        res.json({ mensaje: 'Caracteristica añadida correctamente' })
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Error al añadir la caracteristica'});
+    }
+}
+
+export const deleteCaracteristicaTotal = async (req, res) => { // Eliminar una caracteristica total
+    try {
+        await pool.query('DELETE FROM Caracteristicas WHERE id = ?', [req.params.id])
+        res.json({ mensaje: 'Caracteristica eliminada correctamente' })
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Error al eliminar la caracteristica'});
+    }
+}
+
+
+
     
     
     

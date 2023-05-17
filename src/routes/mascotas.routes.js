@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { createMascota, getMascotas, getMascota, deleteMascota, getMascotaStats, updateMascotaStats, deleteStat, updateMascota, getMascotaEnfermedades, addEnfermedad, deleteEnfermedad, getShelter, addShelter, deleteShelter, getFotos, addFoto, deleteFoto, getVideos, addVideo, deleteVideo} from '../Controllers/mascotas.controller.js'
+import { createMascota, getMascotas, getMascota, deleteMascota, getMascotaStats, updateMascotaStats, deleteStat, updateMascota, getMascotaEnfermedades, addEnfermedad, deleteEnfermedad, getShelter, addShelter, deleteShelter, getFotos, addFoto, deleteFoto, getVideos, addVideo, deleteVideo, getEnfermedades, getCaracteristicas, addEnfermedadTotal, addCaracteristicaTotal, deleteEnfermedadTotal, deleteCaracteristicaTotal} from '../Controllers/mascotas.controller.js'
 
 const router = Router();
 
@@ -44,6 +44,21 @@ router.get('/mascotas/getVideos/:id', getVideos)
 router.put('/mascotas/addVideo/:id_mascota/:id_video', addVideo)
 
 router.delete('/mascotas/deleteVideo/:id_mascota/:id_video', deleteVideo)
+
+router.get('/mascotas/enfermedades', getEnfermedades)
+
+router.post('/mascotas/addEnfermedad', addEnfermedadTotal)
+
+router.delete('/mascotas/deleteEnfermedad/:id_mascota/:id_enfermedad', deleteEnfermedadTotal)
+
+router.get('/mascotas/caracteristicas', getCaracteristicas)
+
+router.post('/mascotas/addCaracteristica', addCaracteristicaTotal)
+
+router.delete('/mascotas/deleteCaracteristica/:id_mascota/:id_caracteristica', deleteCaracteristicaTotal)
+
+
+
 
 
 
