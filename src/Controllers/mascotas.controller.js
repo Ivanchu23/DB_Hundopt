@@ -251,7 +251,7 @@ export const deleteEnfermedadTotal = async (req, res) => { // Eliminar una enfer
     }
 }
 
-export const getCaracteristicas = async (req, res) => { // Obtener las caracteristicas totales
+export const getCaracteristicasTotal = async (req, res) => { // Obtener las caracteristicas totales
     try {
         const [rows] = await pool.query('SELECT * FROM Caracteristicas')
         res.json(rows)
