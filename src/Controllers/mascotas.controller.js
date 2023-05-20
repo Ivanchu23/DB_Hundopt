@@ -222,7 +222,7 @@ export const deleteVideo = async (req, res) => { // Eliminar un video de una mas
 
 export const getEnfermedades = async (req, res) => { // Obtener las enfermedades totales
     try {
-        const [rows] = await pool.query('SELECT * FROM Enfermedades')
+        const rows = await pool.query('SELECT * FROM Enfermedades')
         res.json(rows)
     }
     catch (error) {
