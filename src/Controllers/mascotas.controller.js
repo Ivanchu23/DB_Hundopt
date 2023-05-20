@@ -220,12 +220,13 @@ export const deleteVideo = async (req, res) => { // Eliminar un video de una mas
     }
 }
 
-export const getEnfermedades = async (req, res) => { // Obtener las enfermedades disponibles
+export const getEnfermedades = async (req, res) => {
     try {
-      const rows = await pool.query('SELECT * FROM Enfermedades');
+      const [rows] = await pool.query('SELECT * FROM Enfermedades');
       res.json(rows);
     } catch (error) {
-      res.status(500).json({ message: 'Error al obtener las enfermedades' });
+      console.error(error);
+      return res.status(500).json({ mensaje: 'Error al obtener las enfermedades' });
     }
   };
 
