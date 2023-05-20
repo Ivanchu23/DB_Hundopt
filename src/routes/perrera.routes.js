@@ -7,7 +7,7 @@ router.get('/perrera', getPerreras) //devuelve todas las perreras ok
 
 router.get('/perrera/:id', getPerrera)//devuelve una perrera ok
 
-router.post('/perrera', createPerrera)
+router.post('/perrera', createPerrera)  //crea una perrera ok
 
 router.put('/perrera/:id', updatePerrera) //actualiza una perrera ok
 
@@ -23,11 +23,11 @@ router.put('/perrera/redesSociales/:id', updateRedesSociales) //actualiza las re
 
 router.delete('/perrera/redesSociales/:id', deleteRedesSociales)//elimina las redes sociales de una perrera ok
 
-//router.get('perrera/dogs/:id', getDogs)
+router.get('perrera/dogs/:id', getDogs)
 
-//router.post('perrera/dogs/:id', addDog)
+router.post('perrera/dogs/:id', addDog)
 
-//router.delete('perrera/dogs/:id', deleteDog)
+router.delete('perrera/dogs/:id', deleteDog)
 
 
 export default router;

@@ -29,33 +29,33 @@ router.delete('/mascotas/deleteEnfermedad/:id_mascota/:id_enfermedad', deleteEnf
 
 router.get('/mascotas/shelter/:id', getShelter) // Obtener el shelter de una mascota ok
 
-router.put('/mascotas/addShelter/', addShelter)
+router.put('/mascotas/addShelter/', addShelter) // Agregar un shelter a una mascota ok
 
-router.delete('/mascotas/deleteShelter/:id_mascota/:id_shelter', deleteShelter)
+router.delete('/mascotas/deleteShelter/:id_mascota/:id_shelter', deleteShelter) // Eliminar un shelter de una mascota ok
 
-router.get('/mascotas/fotos/:id', getFotos)
+router.get('/mascotas/fotos/:id', getFotos) // Obtener las fotos de una mascota ok
 
-router.put('/mascotas/addFoto/:id_mascota', addFoto)
+router.put('/mascotas/addFoto/:id_mascota', addFoto) // Agregar una foto a una mascota ok
 
-router.delete('/mascotas/deleteFoto/:id_mascota/:id_foto', deleteFoto)
+router.delete('/mascotas/deleteFoto/:id_mascota/:id_foto', deleteFoto)  // Eliminar una foto de una mascota ok
 
-router.get('/mascotas/getVideos/:id', getVideos)
+router.get('/mascotas/getVideos/:id', getVideos) // Obtener los videos de una mascota ok
 
-router.put('/mascotas/addVideo/:id_mascota/:id_video', addVideo)
+router.put('/mascotas/addVideo/:id_mascota/:id_video', addVideo) // Agregar un video a una mascota ok
 
-router.delete('/mascotas/deleteVideo/:id_mascota/:id_video', deleteVideo)
+router.delete('/mascotas/deleteVideo/:id_mascota/:id_video', deleteVideo) // Eliminar un video de una mascota ok
 
 router.get('/mascotas/enfermedades', getEnfermedades)
 
-router.post('/mascotas/addEnfermedad', addEnfermedadTotal)
+router.post('/mascotas/addEnfermedad', addEnfermedadTotal) // Agregar una enfermedad a una mascota ok
 
-router.delete('/mascotas/deleteEnfermedad/:id_mascota/:id_enfermedad', deleteEnfermedadTotal)
+router.delete('/mascotas/deleteEnfermedad/:id_mascota/:id_enfermedad', deleteEnfermedadTotal) // Eliminar una enfermedad de una mascota ok
 
 router.get('/mascotas/caracteristicas', getCaracteristicasTotal)
 
-router.post('/mascotas/addCaracteristica', addCaracteristicaTotal)
+router.post('/mascotas/addCaracteristica', addCaracteristicaTotal) // Agregar una enfermedad a una mascota ok
 
-router.delete('/mascotas/deleteCaracteristica/:id_mascota/:id_caracteristica', deleteCaracteristicaTotal)
+router.delete('/mascotas/deleteCaracteristica/:id_mascota/:id_caracteristica', deleteCaracteristicaTotal)    // Eliminar una enfermedad de una mascota ok
 
 
 

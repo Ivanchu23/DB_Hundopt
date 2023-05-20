@@ -122,7 +122,7 @@ export const deleteEnfermedad = async (req, res) => { // Eliminar una enfermedad
     }
 }
 
-export const getShelter = async (req, res) => {
+export const getShelter = async (req, res) => { // Obtener las perreras de una mascota
     try {
       const mascotaId = req.params.id;
   
@@ -150,7 +150,7 @@ export const getShelter = async (req, res) => {
       res.json({ message: 'Mascota añadida correctamente' });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Error al añadir la mascota al refugio' });
+      res.status(500).json({ message: 'Error al añadir la mascota a la perrera' });
     }
   };
   
