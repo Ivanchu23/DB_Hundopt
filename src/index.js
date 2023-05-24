@@ -13,10 +13,10 @@ app.use('/', swaggerUi.serve, swaggerUi.setup(usersYaml))
 
 app.use(express.json())
 
-app.use('/hundopt/api',mascotasRoutes)
-app.use('/hundopt/api',appRoutes)
-app.use('/hundopt/api',userRoutes)
-app.use('/hundopt/api',perreraRoutes)
+app.use(mascotasRoutes)
+app.use(appRoutes)
+app.use(userRoutes)
+app.use(perreraRoutes)
 app.use((req, res, next) => {
     res.status(404).json({ message: 'Not found' })
 })
