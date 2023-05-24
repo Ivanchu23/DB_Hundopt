@@ -8,7 +8,7 @@ import perreraRoutes from './routes/perrera.routes.js'
 
 const app = express()
 const usersYaml = YAML.load('./src/Yaml/api.yaml')
-app.use('/', swaggerUi.serve, swaggerUi.setup(usersYaml))
+app.get('/', swaggerUi.serve, swaggerUi.setup(usersYaml))
 
 app.use(express.json())
 
