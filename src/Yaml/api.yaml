@@ -7,7 +7,6 @@ info:
   
 servers:
   - url: https://hundopt.up.railway.app/hundopt/api/
-  description: Servidor de producción
   
 tags:
   - name: Mascotas
