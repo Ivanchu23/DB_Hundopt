@@ -6,7 +6,8 @@ info:
   description: Esta es la API para obtener todos los datos relacionados con la aplicación Hundopt
   
 servers:
-  - url: https://hundopt.up.railway.app/
+  - url: https://hundopt.up.railway.app/hundopt/api/
+  description: Servidor de producción
   
 tags:
   - name: Mascotas
