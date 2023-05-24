@@ -49,7 +49,7 @@ router.get('/mascotas/enfermedades', getEnfermedades)
 
 router.post('/mascotas/addEnfermedad', addEnfermedadTotal) // Agregar una enfermedad a una mascota ok
 
-router.delete('/mascotas/deleteEnfermedad/:id_enfermedad', deleteEnfermedadTotal) // Eliminar una enfermedad de una mascota ok
+router.delete('/mascotas/deleteEnfermedadTotal/:id_enfermedad', deleteEnfermedadTotal) // Eliminar una enfermedad de una mascota ok
 
 router.get('/mascotas/caracteristicas', getCaracteristicasTotal) 
 
