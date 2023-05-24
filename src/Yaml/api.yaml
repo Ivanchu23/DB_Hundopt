@@ -1,0 +1,1437 @@
+swagger: "2.0"
+
+info:
+  title: API de Mascotas
+  version: 1.0.0
+  description: API para administrar mascotas
+  
+servers:
+  - url: https://hundopt.up.railway.app/
+  
+tags:
+  - name: Mascotas
+    description: Consultas con toda la información necesaria para las mascotas
+  - name: Usuarios
+    description: Consultas con todo lo relacionado a los usuarios
+  - name: Perreras
+    description: Consultas con la informacion de las perreras
+paths:
+  /mascotas:
+    post:
+      tags:
+        - Mascotas
+      summary: Crear una mascota
+      requestBody:
+        description: Datos de la mascota a crear
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Mascotas"
+      responses:
+        '200':
+          description: Mascota creada correctamente
+        '500':
+          description: Error al crear la mascota
+
+    get:
+      tags:
+        - Mascotas
+      summary: Obtener todas las mascotas
+      responses:
+        '200':
+          description: OK
+        '500':
+          description: Error al obtener las mascotas
+
+  /mascotas/{id}:
+    get:
+      tags:
+        - Mascotas
+      summary: Obtener una mascota por ID
+      parameters:
+        - name: id
+          type: string
+          in: path
+          description: ID de la mascota a obtener
+          required: true
+      responses:
+        '200':
+          description: OK
+        '500':
+          description: Error al obtener la mascota
+
+    put:
+      tags:
+        - Mascotas
+      summary: Actualizar una mascota
+      parameters:
+        - name: id
+          type: string
+          in: path
+          description: ID de la mascota a actualizar
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Mascotas"
+      responses:
+        '200':
+          description: Mascota actualizada correctamente
+        '500':
+          description: Error al actualizar la mascota
+
+    delete:
+      tags:
+        - Mascotas
+      summary: Eliminar una mascota por ID
+      parameters:
+        - name: id
+          in: path
+          description: ID de la mascota a eliminar
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Mascota eliminada correctamente
+        '500':
+          description: Error al eliminar la mascota
+
+  /mascotas/{id}/stats:
+    get:
+      tags:
+        - Mascotas
+      summary: Obtener las estadísticas de una mascota
+      parameters:
+        - name: id
+          in: path
+          description: ID de la mascota
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+        '500':
+          description: Error al obtener las estadísticas de la mascota
+
+    put:
+      tags:
+        - Mascotas
+      summary: Actualizar las estadísticas de una mascota
+      parameters:
+        - name: id
+          in: path
+          description: ID de la mascota
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_mascota:
+                  type: integer
+                id_caracteristicas:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        '200':
+          description: Estadísticas de la mascota actualizadas correctamente
+        '500':
+          description: Error al actualizar las estadísticas de la mascota
+
+  /mascotas/{id}/stats/{statId}:
+    delete:
+      tags:
+        - Mascotas
+      summary: Eliminar una estadística de una mascota
+      parameters:
+        - name: id
+          in: path
+          description: ID de la mascota
+          required: true
+          schema:
+            type: integer
+        - name: statId
+          in: path
+          description: ID de la estadística a eliminar
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Estadística eliminada correctamente
+        '500':
+          description: Error al eliminar la estadística de la mascota
+
+  /mascotas/{id}/enfermedades:
+    get:
+      tags:
+        - Mascotas
+      summary: Obtener las enfermedades de una mascota
+      parameters:
+        - name: id
+          in: path
+          description: ID de la mascota
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+        '500':
+          description: Error al obtener las enfermedades de la mascota
+
+    post:
+      tags:
+        - Mascotas
+      summary: Añadir una enfermedad a una mascota
+      parameters:
+        - name: id
+          in: path
+          description: ID de la mascota
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_enfermedad:
+                  type: integer
+      responses:
+        '200':
+          description: Enfermedad añadida correctamente
+        '500':
+          description: Error al añadir la enfermedad a la mascota
+
+  /mascotas/{id}/enfermedades/{enfermedadId}:
+    delete:
+      tags:
+        - Mascotas
+      summary: Eliminar una enfermedad de una mascota
+      parameters:
+        - name: id
+          in: path
+          description: ID de la mascota
+          required: true
+          schema:
+            type: integer
+        - name: enfermedadId
+          in: path
+          description: ID de la enfermedad a eliminar
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Enfermedad eliminada correctamente
+        '500':
+          description: Error al eliminar la enfermedad de la mascota
+
+  /mascotas/{id}/shelters:
+    get:
+      tags:
+        - Mascotas
+      summary: Obtener las perreras de una mascota
+      parameters:
+        - name: id
+          in: path
+          description: ID de la mascota
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+        '500':
+          description: Error al obtener las perreras
+  /mascotas/addShelter:
+    post:
+      tags:
+        - Mascotas
+      summary: Agregar un shelter a una mascota
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Perrera"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de éxito
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error al agregar el shelter a la mascota
+
+  /deleteShelter/{id}:
+    delete:
+      tags:
+        - Mascotas
+      summary: Eliminar una mascota de un refugio
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/Perrera_Mascotas"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensaje:
+                    type: string
+                    description: Mensaje de éxito
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error al eliminar la mascota del refugio
+
+  /getFotos/{id}:
+    get:
+      tags:
+        - Mascotas
+      summary: Obtener las fotos de una mascota
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error al obtener las fotos de la mascota
+
+  /addFoto/{id}:
+    post:
+      tags:
+        - Mascotas
+      summary: Añadir una foto a una mascota
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FotosMascotas"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensaje:
+                    type: string
+                    description: Mensaje de éxito
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error al añadir la foto a la mascota
+
+  /deleteFoto/{id}:
+    delete:
+      tags:
+        - Mascotas
+      summary: Eliminar una foto de una mascota
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/FotosMascotas"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensaje:
+                    type: string
+                    description: Mensaje de éxito
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error al eliminar la foto de la mascota
+
+  /getVideos/{id}:
+    get:
+      tags:
+        - Mascotas
+      summary: Obtener los videos de una mascota
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error al obtener los videos de la mascota
+
+  /addVideo/{id}:
+    post:
+      tags:
+        - Mascotas
+      summary: Añadir un video a una mascota
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VideosMascotas"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensaje:
+                    type: string
+                    description: Mensaje de éxito
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error al añadir el video a la mascota
+
+  /deleteVideo/{id}:
+    delete:
+      tags:
+        - Mascotas
+      summary: Eliminar un video de una mascota
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requiredbody:
+       
+          in: body
+          required: true
+          schema:
+             $ref: "#/components/schemas/VideosMascotas"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensaje:
+                    type: string
+                    description: Mensaje de éxito
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error al eliminar el video de la mascota
+
+  /getEnfermedades:
+    get:
+      tags:
+        - Mascotas
+      summary: Obtener las enfermedades
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensaje:
+                    type: string
+                    description: Mensaje de error al obtener las enfermedades
+
+  /addEnfermedadTotal:
+    post:
+      tags:
+        - Mascotas
+      summary: Añadir una enfermedad total
+      parameters:
+        - name: nombre
+          in: body
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensaje:
+                    type: string
+                    description: Mensaje de éxito
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error al añadir la enfermedad
+
+  /deleteEnfermedadTotal/{id}:
+    delete:
+      tags:
+        - Mascotas
+      summary: Eliminar una enfermedad total
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensaje:
+                    type: string
+                    description: Mensaje de éxito
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error al eliminar la enfermedad
+
+  /getCaracteristicasTotal:
+    get:
+      tags:
+        - Mascotas
+      summary: Obtener las características totales
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensaje:
+                    type: string
+                    description: Mensaje de error al obtener las características
+
+  /addCaracteristicaTotal:
+    post:
+      tags:
+        - Mascotas
+      summary: Añadir una característica total
+      parameters:
+        - name: nombre
+          in: body
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensaje:
+                    type: string
+                    description: Mensaje de éxito
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje de error al añadir la característica
+  /getUsers:
+    get:
+      tags:
+      - Usuarios
+      summary: Devuelve todos los usuarios
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+
+  /getUser/{email}:
+    get:
+      tags:
+      - Usuarios
+      summary: Devuelve un usuario
+      parameters:
+        - name: email
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /createUser:
+    post:
+      tags:
+      - Usuarios
+      summary: Crea un usuario, asegurándose de que no exista ya
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Usuarios"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+
+  /updateFullUser/{id}:
+    put:
+      tags:
+      - Usuarios
+      summary: Actualiza un usuario de forma completa
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              nombre:
+                type: string
+              email:
+                type: string
+              pw:
+                type: string
+              telefono:
+                type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+
+  /updateUser/{id}:
+    put:
+      tags:
+      - Usuarios
+      summary: Actualiza un usuario
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+
+  /deleteUser/{id}:
+    delete:
+      tags:
+      - Usuarios
+      summary: Borra un usuario
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+
+  /login:
+    post:
+      tags:
+      - Usuarios
+      summary: Devuelve el token de un usuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                pw:
+                  type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  auth:
+                    type: boolean
+                  token:
+                    type: string
+
+  /likedDogs/{id}:
+    get:
+      tags:
+      - Usuarios
+      summary: Devuelve todos los perros que le gustan a un usuario
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /likeADog/{id_user}/{id_mascota}:
+    post:
+      tags:
+      - Usuarios
+      summary: Añade un perro a la lista de perros que le gustan a un usuario
+      parameters:
+        - name: id_user
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: id_mascota
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /ownedDogs/{id}:
+    get:
+      tags:
+      - Usuarios
+      summary: Devuelve todos los perros que tiene un usuario
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /ownADog/{id_user}/{id_mascota}:
+    post:
+      tags:
+      - Usuarios
+      summary: Añade un perro a la lista de perros que tiene un usuario
+      parameters:
+        - name: id_user
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: id_mascota
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /userStats/{id}:
+    get:
+      tags:
+      - Usuarios
+      summary: Devuelve las estadísticas de un usuario
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /updateUserStats:
+    put:
+      tags:
+      - Usuarios
+      summary: Actualiza las estadísticas de un usuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Usuarios_Caracteristicas"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /logout:
+    get:
+      tags:
+      - Usuarios
+      summary: Cierra sesión
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  auth:
+                    type: boolean
+                  token:
+                    type: null
+
+  /likedShelters/{id}:
+    get:
+      tags:
+      - Usuarios
+      summary: Devuelve todos los refugios que le gustan a un usuario
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /likeAShelter:
+    post:
+      tags:
+      - Usuarios
+      summary: Añade un refugio a la lista de refugios que le gustan a un usuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_usuario:
+                  type: integer
+                id_perrera:
+                  type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '500':
+          description: Error al añadir un refugio
+          content:
+              application/json:
+                schema:
+                  type: object
+
+  /perrera:
+    get:
+        tags:
+          - Perreras
+        summary: Devuelve todas las perreras
+        responses:
+          '200':
+            description: OK
+
+  /perrera/{id}:
+    get:
+      tags:
+      - Perreras
+      summary: Devuelve una perrera
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+
+    put:
+      tags:
+        - Perreras
+      summary: Actualiza una perrera
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+
+    delete:
+      tags:
+        - Perreras
+      summary: Elimina una perrera
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+
+  /perrera/redesSociales/{id}:
+    get:
+      tags:
+        - Perreras
+      summary: Devuelve las redes sociales de una perrera
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+
+    post:
+      tags:
+        - Perreras
+      summary: Añade las redes sociales de una perrera
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+
+    put:
+      tags:
+        - Perreras
+      summary: Actualiza las redes sociales de una perrera
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+
+    delete:
+      tags:
+        - Perreras
+      summary: Elimina las redes sociales de una perrera
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+
+  /perrera/dogs/{id}:
+    get:
+      tags:
+        - Perreras
+      summary: Devuelve los perros de una perrera
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+
+    post:
+      tags:
+        - Perreras
+      summary: Añade un perro a una perrera
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+
+    delete:
+      tags:
+        - Perreras
+      summary: Elimina un perro de una perrera
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+                  
+
+                    
+components:
+    schemas:
+      Mascotas:
+        type: object
+        properties:
+          nombre:
+            type: string
+          raza:
+            type: string
+          ubicacion:
+            type: string
+          peso:
+            type: number
+          reservado:
+            type: boolean
+      Perrera:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int32
+          email:
+            type: string
+          direccion:
+            type: string
+          mascotas_id:
+            type: array
+            items:
+              type: integer
+            example: [1, 2, 3]
+          telefono:
+            type: string
+          foto:
+            type: string
+          nombre:
+            type: string
+        required:
+          - email
+          - direccion
+          - mascotas_id
+          - telefono
+          - foto
+          - nombre
+      
+      Enfermedades:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int32
+          nombre:
+            type: string
+        required:
+          - nombre
+
+      Caracteristicas:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int32
+          nombre:
+            type: string
+        required:
+          - nombre
+
+      Mascotas_Enfermedades:
+        type: object
+        properties:
+          id_mascota:
+            type: integer
+            format: int32
+          id_enfermedad:
+            type: integer
+            format: int32
+          tiene_enfermedad:
+            type: boolean
+        required:
+          - id_mascota
+          - id_enfermedad
+          - tiene_enfermedad
+
+      Mascotas_Caracteristicas:
+        type: object
+        properties:
+          id_mascota:
+            type: integer
+            format: int32
+          id_caracteristica:
+            type: integer
+            format: int32
+        required:
+          - id_mascota
+          - id_caracteristica
+
+      Usuarios:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int32
+          nombre:
+            type: string
+          email:
+            type: string
+          pw:
+            type: string
+          telefono:
+            type: string
+        required:
+          - nombre
+          - email
+          - pw
+          - telefono
+
+      FotosMascotas:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int32
+          id_mascota:
+            type: integer
+            format: int32
+          url:
+            type: string
+        required:
+          - id_mascota
+          - url
+
+      VideosMascotas:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int32
+          id_mascota:
+            type: integer
+            format: int32
+          url:
+            type: string
+        required:
+          - id_mascota
+          - url
+
+      Perrera_Mascotas:
+        type: object
+        properties:
+          id_perrera:
+            type: integer
+            format: int32
+          id_mascota:
+            type: integer
+            format: int32
+        required:
+          - id_perrera
+          - id_mascota
+
+      Mascotas_Usuarios_Liked:
+        type: object
+        properties:
+          id_mascota:
+            type: integer
+            format: int32
+          id_user:
+            type: integer
+            format: int32
+        required:
+          - id_mascota
+          - id_user
+
+      Mascotas_Usuarios_Owned:
+        type: object
+        properties:
+          id_mascota:
+            type: integer
+            format: int32
+          id_user:
+            type: integer
+            format: int32
+        required:
+          - id_mascota
+          - id_user
+
+      Usuarios_Caracteristicas:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int32
+          id_usuario:
+            type: integer
+            format: int32
+          id_caracteristica:
+            type: integer
+            format: int32
+        required:
+          - id_usuario
+          - id_caracteristica
+
+      Usuarios_Perreras:
+        type: object
+        properties:
+          id_usuario:
+            type: integer
+            format: int32
+          id_perrera:
+            type: integer
+            format: int32
+        required:
+          - id_usuario
+          - id_perrera
+
+      Redes_Sociales_Perrera:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int32
+          id_perrera:
+            type: integer
+            format: int32
+          nombre:
+            type: string
+          url:
+            type: string
+        required:
+          - id_perrera
+          - nombre
+          - url
+
+
+
+
