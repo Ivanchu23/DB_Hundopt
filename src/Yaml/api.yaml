@@ -3,10 +3,10 @@ swagger: "2.0"
 info:
   title: Hundopt API
   version: 1.0.0
-  description: Esta es la API para obtener todos los datos relacionados con la aplicación Hundopt
+  description: API para administrar todo lo necesario para la aplicación Hundopt
   
 servers:
-  - url: https://hundopt.up.railway.app/hundopt/api/
+  - url: https://hundopt.up.railway.app/
   
 tags:
   - name: Mascotas
