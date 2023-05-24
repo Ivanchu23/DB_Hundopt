@@ -8,9 +8,8 @@ import perreraRoutes from './routes/perrera.routes.js'
 
 const app = express()
 const usersYaml = YAML.load('./src/Yaml/api.yaml')
-app.get('/', (req, res) => {
-    res.send(usersYaml)
-})
+app.use('/', swaggerUi.serve, swaggerUi.setup(usersYaml))
+
 app.use(express.json())
 
 app.use('/hundopt/api',mascotasRoutes)
